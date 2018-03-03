@@ -1,5 +1,9 @@
 package com.ustc.latte.app;
 
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,7 +14,7 @@ public class Configurator {
     //存放配置文件
     private static final HashMap<String, Object> LATTE_CONFIGS = new HashMap<>();
     //存放图标并封装
-//    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     private Configurator() {
         //开始配置，未完成
@@ -31,7 +35,7 @@ public class Configurator {
     }
 
     public final void configure() {
-//        initIcons();
+        initIcons();
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
     }
 
@@ -41,20 +45,21 @@ public class Configurator {
     }
 
     //初始化图标
-//    private void  initIcons(){
-//        if(ICONS.size()>0){
-//            //初始化
-//            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
-//            for(int i=1;i<ICONS.size();i++){
-//                initializer.with(ICONS.get(i));
-//            }
-//        }
-//    }
+    private void  initIcons(){
+        if(ICONS.size()>0){
+            //初始化
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for(int i=1;i<ICONS.size();i++){
+                initializer.with(ICONS.get(i));
+            }
+        }
+    }
 
-//    public  final Configurator withIcon(IconFontDescriptor descriptor){
-//        ICONS.add(descriptor);
-//        return this;
-//    }
+    public  final Configurator withIcon(IconFontDescriptor descriptor){
+        ICONS.add(descriptor);
+        return this;
+    }
+
     private void checkConfiguration() {
         final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY.name());
         if (!isReady) {

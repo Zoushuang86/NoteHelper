@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "27.0.3"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.ustc.notehelper.example"
         minSdkVersion 15
@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
     annotationProcessor project(':latte-compiler')
     compile project(':latte-ec')
 }
