@@ -2,6 +2,9 @@ package com.ustc.latte.net.callback;
 
 import android.os.Handler;
 
+import com.ustc.latte.ui.LatteLoader;
+import com.ustc.latte.ui.LoaderStyle;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,25 +18,17 @@ public class RequestCallbacks implements Callback<String> {
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
-//    private final LoaderStyle LOADER_STYLE;
+    private final LoaderStyle LOADER_STYLE;
     //模仿网络延迟
     private static final Handler HANDLER = new Handler();
 
-//    public RequesCallbacks(IRequest request, ISuccess success, IFailure failure, IError error, LoaderStyle loaderStyle) {
-//        this.REQUEST = request;
-//        this.SUCCESS = success;
-//        this.FAILURE = failure;
-//        this.ERROR = error;
-//        this.LOADER_STYLE = loaderStyle;
-//    }
-
-    public RequestCallbacks(IRequest request, ISuccess success, IFailure failure, IError error) {
+    public RequestCallbacks(IRequest request, ISuccess success, IFailure failure, IError error, LoaderStyle loaderStyle) {
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
         this.ERROR = error;
+        this.LOADER_STYLE = loaderStyle;
     }
-
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
@@ -49,7 +44,7 @@ public class RequestCallbacks implements Callback<String> {
             }
         }
 
-//        stopLoading();
+        stopLoading();
     }
 
     @Override
@@ -62,17 +57,17 @@ public class RequestCallbacks implements Callback<String> {
             REQUEST.onRequstEnd();
         }
 
-//        stopLoading();
+        stopLoading();
     }
 
-//    private void stopLoading(){
-//        if(LOADER_STYLE!=null){
-//            HANDLER.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    LeoLoader.stopLoading();
-//                }
-//            },2000);
-//        }
-//    }
+    private void stopLoading(){
+        if(LOADER_STYLE!=null){
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    LatteLoader.stopLoading();
+                }
+            },2000);
+        }
+    }
 }

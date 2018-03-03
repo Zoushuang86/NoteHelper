@@ -7,6 +7,8 @@ import com.ustc.latte.net.callback.IFailure;
 import com.ustc.latte.net.callback.IRequest;
 import com.ustc.latte.net.callback.ISuccess;
 import com.ustc.latte.net.callback.RequestCallbacks;
+import com.ustc.latte.ui.LatteLoader;
+import com.ustc.latte.ui.LoaderStyle;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -29,7 +31,7 @@ public class RestClient {
     private final IError ERROR;
     private final RequestBody BODY;
 
-//    private final LoaderStyle LOADER_STYLE;
+    private final LoaderStyle LOADER_STYLE;
     private final Context CONTEXT;
 
     public RestClient(String url,
@@ -39,9 +41,8 @@ public class RestClient {
                       IFailure failure,
                       IError error,
                       RequestBody body,
-                      Context context
-                      ) {
-//                      LoaderStyle loaderStyle) {
+                      Context context,
+                      LoaderStyle loaderStyle) {
         this.URL = url;
         PARAMS.putAll(params);
         this.REQUEST = request;
@@ -50,7 +51,7 @@ public class RestClient {
         this.ERROR = error;
         this.BODY = body;
         this.CONTEXT = context;
-//        this.LOADER_STYLE = loaderStyle;
+        this.LOADER_STYLE = loaderStyle;
     }
 
     public static RestClientBuilder builder(){
@@ -65,9 +66,9 @@ public class RestClient {
             REQUEST.onRequstStart();
         }
 
-//        if (LOADER_STYLE!=null){
-//            LeoLoader.showLoading(CONTEXT, LOADER_STYLE);
-//        }
+        if (LOADER_STYLE!=null){
+            LatteLoader.showLoading(CONTEXT, LOADER_STYLE);
+        }
 
         switch (method){
             case GET:
@@ -97,8 +98,8 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 FAILURE,
-                ERROR
-//                LOADER_STYLE
+                ERROR,
+                LOADER_STYLE
         );
     }
 
