@@ -10,7 +10,7 @@ import retrofit2.Response;
  * Created by DELL on 2018/3/3.
  */
 
-public class RequesCallbacks implements Callback<String> {
+public class RequestCallbacks implements Callback<String> {
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
@@ -27,7 +27,7 @@ public class RequesCallbacks implements Callback<String> {
 //        this.LOADER_STYLE = loaderStyle;
 //    }
 
-    public RequesCallbacks(IRequest request, ISuccess success, IFailure failure, IError error) {
+    public RequestCallbacks(IRequest request, ISuccess success, IFailure failure, IError error) {
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;

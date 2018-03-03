@@ -6,7 +6,7 @@ import com.ustc.latte.net.callback.IError;
 import com.ustc.latte.net.callback.IFailure;
 import com.ustc.latte.net.callback.IRequest;
 import com.ustc.latte.net.callback.ISuccess;
-import com.ustc.latte.net.callback.RequesCallbacks;
+import com.ustc.latte.net.callback.RequestCallbacks;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -93,7 +93,7 @@ public class RestClient {
     }
 
     private Callback<String> getRequestCallback(){
-        return new RequesCallbacks(
+        return new RequestCallbacks(
                 REQUEST,
                 SUCCESS,
                 FAILURE,
