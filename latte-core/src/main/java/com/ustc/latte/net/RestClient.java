@@ -2,6 +2,7 @@ package com.ustc.latte.net;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ustc.latte.net.callback.IError;
 import com.ustc.latte.net.callback.IFailure;
 import com.ustc.latte.net.callback.IRequest;
@@ -76,7 +77,7 @@ public class RestClient {
         return new RestClientBuilder();
     }
 
-    private  void request(HttpMethod method){
+    private void request(HttpMethod method){
         final RestService service = RestCreator.getRestService();
         Call<String> call = null;
 

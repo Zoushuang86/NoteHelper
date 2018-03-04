@@ -7,9 +7,20 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ustc.latte.app.ConfigType;
+import com.ustc.latte.app.Configurator;
+import com.ustc.latte.app.Latte;
 import com.ustc.latte.delegates.LatteDelegate;
 import com.ustc.latte.ec.R;
 import com.ustc.latte.ec.R2;
+import com.ustc.latte.net.RestClient;
+import com.ustc.latte.net.callback.IError;
+import com.ustc.latte.net.callback.IFailure;
+import com.ustc.latte.net.callback.ISuccess;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,7 +39,37 @@ public class SignInDelegate extends LatteDelegate{
     @OnClick(R2.id.btn_sign_in)
     void onClickSignIn(){
         if(checkForm()){
-            Toast.makeText(getContext(), "验证成功", Toast.LENGTH_SHORT).show();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("email", mEmail.getText().toString());
+            map.put("password", mPassword.getText().toString());
+            String raw = JSONObject.toJSONString(map);
+
+            RestClient.builder()
+//                    .url("http://news.baidu.com/")
+                    .url(Latte.getConfiguration(ConfigType.API_HOST)+"/api/auth/")
+                    .raw(raw)
+                    .loader(getContext())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+                            Toast.makeText(getContext(), code+":"+msg, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .failure(new IFailure() {
+                        @Override
+                        public void onFailure() {
+                            Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .build()
+                    .post();
         }
     }
 
@@ -56,8 +97,8 @@ public class SignInDelegate extends LatteDelegate{
         if (password.isEmpty()) {
             mPassword.setError("密码不能为空");
             isPass = false;
-        } else if (password.length() < 8) {
-            mPassword.setError("请填写至少8位数");
+        } else if (password.length() < 6) {
+            mPassword.setError("请填写至少6位数");
             isPass = false;
         } else {
             mPassword.setError(null);

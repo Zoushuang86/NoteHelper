@@ -9,12 +9,19 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ustc.latte.app.ConfigType;
+import com.ustc.latte.app.Latte;
 import com.ustc.latte.delegates.LatteDelegate;
 import com.ustc.latte.ec.R;
 import com.ustc.latte.ec.R2;
 import com.ustc.latte.net.RestClient;
+import com.ustc.latte.net.callback.IError;
+import com.ustc.latte.net.callback.IFailure;
 import com.ustc.latte.net.callback.ISuccess;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,18 +56,44 @@ public class SignUpDelegate extends LatteDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
-//            RestClient.builder()
-//                    .url("users")
-//                    .params("", "")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
-            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", mName.getText().toString());
+            map.put("email", mEmail.getText().toString());
+            map.put("password", mPassword.getText().toString());
+            map.put("userIdentity", mIdentity.getText().toString());
+            map.put("userPhone", mPhone.getText().toString());
+            map.put("userAddress", mAddress.getText().toString());
+            map.put("userEducation", mEducation.getText().toString());
+            map.put("userBrithday", mBrithday.getText().toString());
+            String raw = JSONObject.toJSONString(map);
+
+
+            RestClient.builder()
+                    .url(Latte.getConfiguration(ConfigType.API_HOST)+"/api/users/")
+                    .raw(raw)
+                    .loader(getContext())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+                            Toast.makeText(getContext(), code+":"+msg, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .failure(new IFailure() {
+                        @Override
+                        public void onFailure() {
+                            Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .build()
+                    .post();
+//            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -102,8 +135,8 @@ public class SignUpDelegate extends LatteDelegate {
         if (password.isEmpty()) {
             mPassword.setError("密码不能为空");
             isPass = false;
-        } else if (password.length() < 8) {
-            mPassword.setError("请填写至少8位数");
+        } else if (password.length() < 6) {
+            mPassword.setError("请填写至少6位数");
             isPass = false;
         } else {
             mPassword.setError(null);
@@ -112,7 +145,7 @@ public class SignUpDelegate extends LatteDelegate {
         if (identity.isEmpty()) {
             mIdentity.setError("身份证不能为空");
             isPass = false;
-        } else if (identity.length() < 18) {
+        } else if (identity.length() != 18) {
             mIdentity.setError("身份证位数为18");
             isPass = false;
         } else {
@@ -122,8 +155,8 @@ public class SignUpDelegate extends LatteDelegate {
         if (rePassword.isEmpty()) {
             mRePassword.setError("不能为空");
             isPass = false;
-        } else if (rePassword.length() < 8) {
-            mRePassword.setError("请填写至少8位数");
+        } else if (rePassword.length() < 6) {
+            mRePassword.setError("请填写至少6位数");
             isPass = false;
         } else if (!rePassword.equals(password)) {
             mRePassword.setError("密码不一致");

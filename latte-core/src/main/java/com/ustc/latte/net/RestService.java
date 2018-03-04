@@ -31,6 +31,7 @@ public interface RestService {
     @FormUrlEncoded
     @POST
     Call<String> post(@Url String url, @FieldMap Map<String,Object> params);
+//    Call<String> post(@Url String url, @Body String params);
 
     @POST
     Call<String> postRaw(@Url String url, @Body RequestBody body);
