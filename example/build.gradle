@@ -24,4 +24,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor project(':latte-compiler')
     compile project(':latte-ec')
+    //查看数据库依赖
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

@@ -1,14 +1,18 @@
 package com.ustc.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ustc.latte.app.ConfigType;
 import com.ustc.latte.app.Latte;
@@ -27,6 +31,8 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.ustc.latte.app.ConfigType.HANDLER;
 
 /**
  * Created by DELL on 2018/3/4.
@@ -53,6 +59,16 @@ public class SignUpDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_up_brithday)
     TextInputEditText mBrithday = null;
 
+    private ISignListener mISignListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
@@ -70,19 +86,34 @@ public class SignUpDelegate extends LatteDelegate {
 
 
             RestClient.builder()
-                    .url(Latte.getConfiguration(ConfigType.API_HOST)+"/api/users/")
+                    .url(Latte.getConfiguration(ConfigType.API_HOST) + "/api/users/")
                     .raw(raw)
                     .loader(getContext())
                     .success(new ISuccess() {
                         @Override
-                        public void onSuccess(String response) {
-                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        public void onSuccess(final String response) {
+                            String status = JSON.parseObject(response).getString("status");
+                            if (TextUtils.isEmpty(status)) {
+                                JSONObject error = JSON.parseObject(response).getJSONObject("error");
+                                String message = error.getString("message");
+                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                            } else {
+//                                Toast.makeText(getContext(), "注册成功！", Toast.LENGTH_SHORT).show();
+                                SignHandler.onSignUp(response,mISignListener);
+//                                final Handler HANDLER = new Handler();
+//                                HANDLER.postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //跳转主页面
+//                                    }
+//                                }, 2000);
+                            }
                         }
                     })
                     .error(new IError() {
                         @Override
                         public void onError(int code, String msg) {
-                            Toast.makeText(getContext(), code+":"+msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), code + ":" + msg, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .failure(new IFailure() {
@@ -98,7 +129,7 @@ public class SignUpDelegate extends LatteDelegate {
     }
 
     @OnClick(R2.id.tv_link_sign_in)
-    void onClickSignInLink(){
+    void onClickSignInLink() {
         start(new SignInDelegate());
     }
 
@@ -168,7 +199,7 @@ public class SignUpDelegate extends LatteDelegate {
         if (phone.isEmpty()) {
             mPhone.setError("手机号码不能为空");
             isPass = false;
-        } else if (phone.length()<11) {
+        } else if (phone.length() < 11) {
             mPhone.setError("手机号码至少11位数");
             isPass = false;
         } else {
