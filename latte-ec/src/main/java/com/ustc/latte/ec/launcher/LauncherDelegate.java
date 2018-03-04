@@ -7,6 +7,7 @@ import android.view.View;
 import com.ustc.latte.ec.R;
 import com.ustc.latte.ec.R2;
 import com.ustc.latte.delegates.LatteDelegate;
+import com.ustc.latte.ui.launcher.ScrollLauncherTag;
 import com.ustc.latte.util.storage.LattePreference;
 import com.ustc.latte.util.timer.BaseTimerTask;
 import com.ustc.latte.util.timer.ITimerListener;
@@ -33,7 +34,7 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener{
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
-      //      checkIsShowScroll();
+            checkIsShowScroll();
         }
     }
 
@@ -54,13 +55,13 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener{
     }
 
     //判断是否显示滑动启动页
-//    private void checkIsShowScroll(){
-//        if(!LattePreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())){
-//            start(new LauncherScrollDelegate(), SINGLETASK);
-//        }else {
-//            //检查用户是否登录了APP
-//        }
-//    }
+    private void checkIsShowScroll(){
+        if(!LattePreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())){
+            start(new LauncherScrollDelegate(), SINGLETASK);
+        }else {
+            //检查用户是否登录了APP
+        }
+    }
 
 
     @Override
@@ -75,7 +76,7 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener{
                         if (mTimer != null) {
                             mTimer.cancel();
                             mTimer = null;
-//                            checkIsShowScroll();
+                            checkIsShowScroll();
                         }
                     }
                 }
