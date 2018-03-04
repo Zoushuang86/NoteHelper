@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">LatteEC</string>
+    <string name="sign_up">注册</string>
+    <string name="username">姓名</string>
+    <string name="email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="repeat_password">重复密码</string>
+    <string name="user_identity">身份证</string>
+    <string name="phone">手机号码</string>
+    <string name="address">地址</string>
+    <string name="education">教育程度</string>
+    <string name="brithday">格式：年-月-日，如：1995-09-13</string>
+    <string name="sign_up_hint">已经注册了？请登陆</string>
 </resources>

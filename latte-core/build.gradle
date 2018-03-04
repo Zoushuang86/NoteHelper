@@ -51,4 +51,8 @@ dependencies {
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     //JSON依赖
     compile 'com.alibaba:fastjson:1.2.46'
+    //登陆注册界面设计依赖
+    //Android Support包
+    compile 'com.android.support:support-v4:26.0.0-alpha1'
+    compile 'com.android.support:design:26.0.0-alpha1'
 }

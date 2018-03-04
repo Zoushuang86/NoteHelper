@@ -11,6 +11,7 @@ import com.ustc.latte.app.Latte;
 import com.ustc.latte.delegates.LatteDelegate;
 import com.ustc.latte.ec.launcher.LauncherDelegate;
 import com.ustc.latte.ec.launcher.LauncherScrollDelegate;
+import com.ustc.latte.ec.sign.SignUpDelegate;
 
 public class ExampleActivity extends ProxyActivity {
 
@@ -25,7 +26,7 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 
 }
