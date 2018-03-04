@@ -8,8 +8,8 @@ import com.ustc.latte.net.callback.IRequest;
 import com.ustc.latte.net.callback.ISuccess;
 import com.ustc.latte.net.callback.RequestCallbacks;
 import com.ustc.latte.net.download.DownloadHandler;
-import com.ustc.latte.ui.LatteLoader;
-import com.ustc.latte.ui.LoaderStyle;
+import com.ustc.latte.ui.loader.LatteLoader;
+import com.ustc.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

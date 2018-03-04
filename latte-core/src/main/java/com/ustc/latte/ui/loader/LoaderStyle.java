@@ -1,4 +1,4 @@
-package com.ustc.latte.ui;
+package com.ustc.latte.ui.loader;
 
 /**
  * Created by DELL on 2018/3/3.

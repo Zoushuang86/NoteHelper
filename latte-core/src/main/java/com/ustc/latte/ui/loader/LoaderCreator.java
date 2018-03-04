@@ -1,4 +1,4 @@
-package com.ustc.latte.ui;
+package com.ustc.latte.ui.loader;
 
 import android.content.Context;
 

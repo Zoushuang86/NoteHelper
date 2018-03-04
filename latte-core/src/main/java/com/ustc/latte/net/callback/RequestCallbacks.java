@@ -2,8 +2,8 @@ package com.ustc.latte.net.callback;
 
 import android.os.Handler;
 
-import com.ustc.latte.ui.LatteLoader;
-import com.ustc.latte.ui.LoaderStyle;
+import com.ustc.latte.ui.loader.LatteLoader;
+import com.ustc.latte.ui.loader.LoaderStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

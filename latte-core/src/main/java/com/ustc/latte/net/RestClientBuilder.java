@@ -6,7 +6,7 @@ import com.ustc.latte.net.callback.IError;
 import com.ustc.latte.net.callback.IFailure;
 import com.ustc.latte.net.callback.IRequest;
 import com.ustc.latte.net.callback.ISuccess;
-import com.ustc.latte.ui.LoaderStyle;
+import com.ustc.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;
