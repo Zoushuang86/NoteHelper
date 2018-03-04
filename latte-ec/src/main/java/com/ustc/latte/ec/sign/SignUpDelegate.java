@@ -63,8 +63,11 @@ public class SignUpDelegate extends LatteDelegate {
             Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }
-//    @BindView(R2.id.tv_link_sign_in)
-//    AppCompatTextView mTvLinkSignIn = null;
+
+    @OnClick(R2.id.tv_link_sign_in)
+    void onClickSignInLink(){
+        start(new SignInDelegate());
+    }
 
     private Boolean checkForm() {
         final String name = mName.getText().toString();
