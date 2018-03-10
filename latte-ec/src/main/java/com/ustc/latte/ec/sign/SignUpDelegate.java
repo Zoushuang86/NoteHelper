@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 import static com.ustc.latte.app.ConfigType.HANDLER;
 
@@ -56,6 +58,8 @@ public class SignUpDelegate extends LatteDelegate {
     TextInputEditText mAddress = null;
     @BindView(R2.id.edit_sign_up_education)
     TextInputEditText mEducation = null;
+//    @BindView(R2.id.spinner_sign_up_education)
+//    AppCompatSpinner mEducation = null;
     @BindView(R2.id.edit_sign_up_brithday)
     TextInputEditText mBrithday = null;
 
@@ -216,7 +220,10 @@ public class SignUpDelegate extends LatteDelegate {
         if (education.isEmpty()) {
             mEducation.setError("教育程度不能为空");
             isPass = false;
-        } else {
+        } else if((!mEducation.equals("本科"))||(!mEducation.equals("硕士"))||(!mEducation.equals("博士"))){
+            mEducation.setError("请填写以下选项之一：本科、硕士、博士");
+            isPass = false;
+        } else{
             mEducation.setError(null);
         }
 

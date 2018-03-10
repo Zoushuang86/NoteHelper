@@ -38,7 +38,6 @@ public class SignHandler {
         final UserProfile profile = new UserProfile(userId, name, email, token);
         DatabaseManager.getInstance().getDao().insert(profile);
 
-
         //已经注册并登录成功了
         AccountManager.setSignState(true);
         signListener.onSignUpSuccess();

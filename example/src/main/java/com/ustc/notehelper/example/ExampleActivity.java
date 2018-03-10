@@ -11,6 +11,7 @@ import com.ustc.latte.app.Latte;
 import com.ustc.latte.delegates.LatteDelegate;
 import com.ustc.latte.ec.launcher.LauncherDelegate;
 import com.ustc.latte.ec.launcher.LauncherScrollDelegate;
+import com.ustc.latte.ec.main.EcBottomDelegate;
 import com.ustc.latte.ec.sign.ISignListener;
 import com.ustc.latte.ec.sign.SignInDelegate;
 import com.ustc.latte.ec.sign.SignUpDelegate;
@@ -47,17 +48,17 @@ public class ExampleActivity extends ProxyActivity implements
 
     @Override
     public void onLauncherFinish(OnLauncherFinishTag tag) {
-        switch (tag){
-            case SIGNED:
-                Toast.makeText(this, "启动结束，用户已经登陆！", Toast.LENGTH_SHORT).show();
-                start(new ExampleDelegate());
-                break;
-            case NOT_SIGNED:
-                Toast.makeText(this, "启动结束，用户没有登陆！", Toast.LENGTH_SHORT).show();
-                startWithPop(new SignInDelegate());
-                break;
-            default:
-                break;
-        }
+//        switch (tag){
+//            case SIGNED:
+//                Toast.makeText(this, "启动结束，用户已经登陆！", Toast.LENGTH_SHORT).show();
+                startWithPop(new EcBottomDelegate());
+//                break;
+//            case NOT_SIGNED:
+//                Toast.makeText(this, "启动结束，用户没有登陆！", Toast.LENGTH_SHORT).show();
+//                startWithPop(new SignInDelegate());
+//                break;
+//            default:
+//                break;
+//        }
     }
 }
