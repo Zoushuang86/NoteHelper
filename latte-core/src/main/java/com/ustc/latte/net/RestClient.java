@@ -1,6 +1,7 @@
 package com.ustc.latte.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ustc.latte.net.callback.IError;
@@ -13,6 +14,7 @@ import com.ustc.latte.ui.loader.LatteLoader;
 import com.ustc.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -44,6 +46,9 @@ public class RestClient {
 
     private final LoaderStyle LOADER_STYLE;
     private final Context CONTEXT;
+    //token
+    private final String TOKEN;
+    private final Map<String,String> TokenMap = new HashMap<>();
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -57,7 +62,8 @@ public class RestClient {
                       RequestBody body,
                       File file,
                       Context context,
-                      LoaderStyle loaderStyle) {
+                      LoaderStyle loaderStyle,
+                      String token) {
         this.URL = url;
         PARAMS.putAll(params);
         this.DOWNLOAD_DIR = downloadDir;
@@ -71,6 +77,7 @@ public class RestClient {
         this.FILE = file;
         this.CONTEXT = context;
         this.LOADER_STYLE = loaderStyle;
+        this.TOKEN = token;
     }
 
     public static RestClientBuilder builder(){
@@ -93,11 +100,20 @@ public class RestClient {
             case GET:
                 call = service.get(URL,PARAMS);
                 break;
-            case POST:
-                call = service.post(URL,PARAMS);
-                break;
             case POST_RAW:
-                call = service.postRaw(URL, BODY);
+                call = service.postRaw(URL,BODY);
+                break;
+            case POST_TOKEN:
+                call = service.postToken(URL, TokenMap);
+                break;
+            case POST_TOKEN_PARAMS:
+                call = service.postTokenParams(URL, TokenMap,PARAMS);
+                break;
+            case POST_TOKEN_RAW:
+                call = service.postTokenRaw(URL, TokenMap,BODY);
+                break;
+            case POST_TOKEN_PARAMS_RAW:
+                call = service.postTokenParamsRaw(URL, TokenMap,PARAMS,BODY);
                 break;
             case PUT:
                 call = service.put(URL,PARAMS);
@@ -140,13 +156,23 @@ public class RestClient {
     }
 
     public final void post(){
-        if (BODY == null) {
-            request(HttpMethod.POST);
-        } else {
-            if (!PARAMS.isEmpty()) {
-                throw new RuntimeException("params must be null!");
-            }
+        if (TextUtils.isEmpty(TOKEN)) {
             request(HttpMethod.POST_RAW);
+        } else {
+            TokenMap.put("token",TOKEN);
+            if (PARAMS.isEmpty()) {
+                if(BODY == null){
+                    request(HttpMethod.POST_TOKEN);
+                }else{
+                    request(HttpMethod.POST_TOKEN_RAW);
+                }
+            }else {
+                if(BODY == null){
+                    request(HttpMethod.POST_TOKEN_PARAMS);
+                }else{
+                    request(HttpMethod.POST_TOKEN_PARAMS_RAW);
+                }
+            }
         }
     }
 

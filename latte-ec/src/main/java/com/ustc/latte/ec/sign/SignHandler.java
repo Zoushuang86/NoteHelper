@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ustc.latte.app.AccountManager;
 import com.ustc.latte.ec.database.DatabaseManager;
 import com.ustc.latte.ec.database.UserProfile;
+import com.ustc.latte.util.storage.LattePreference;
 
 /**
  * Created by DELL on 2018/3/4.
@@ -13,14 +14,17 @@ import com.ustc.latte.ec.database.UserProfile;
 public class SignHandler {
     public static void onSignIn(String response, ISignListener signListener) {
 //    public static void onSignIn(String response) {
-        final JSONObject profileJson = JSON.parseObject(response).getJSONObject("result");
-        final long userId = profileJson.getLong("userId");
-        final String name = profileJson.getString("name");
-        final String email = profileJson.getString("email");
-        final String token = profileJson.getString("token");
+        final String profile = JSON.parseObject(response).getString("result");
+//        final JSONObject profileJson = JSON.parseObject(response).getJSONObject("result");
+//        final long userId = profileJson.getLong("userId");
+//        final String name = profileJson.getString("name");
+//        final String email = profileJson.getString("email");
+//        final String token = profileJson.getString("token");
 
-        final UserProfile profile = new UserProfile(userId, name, email, token);
-        DatabaseManager.getInstance().getDao().insert(profile);
+//        final UserProfile profile = new UserProfile(userId, name, email, token);
+//        DatabaseManager.getInstance().getDao().insert(profile);
+
+        LattePreference.setAppProfile(profile);
 
         //已经注册并登录成功了
         AccountManager.setSignState(true);
@@ -29,14 +33,16 @@ public class SignHandler {
 
 
     public static void onSignUp(String response, ISignListener signListener) {
-        final JSONObject profileJson = JSON.parseObject(response).getJSONObject("result");
-        final long userId = profileJson.getLong("userId");
-        final String name = profileJson.getString("name");
-        final String email = profileJson.getString("email");
-        final String token = profileJson.getString("token");
+        final String profile = JSON.parseObject(response).getString("result");
+//        final JSONObject profileJson = JSON.parseObject(response).getJSONObject("result");
+//        final long userId = profileJson.getLong("userId");
+//        final String name = profileJson.getString("name");
+//        final String email = profileJson.getString("email");
+//        final String token = profileJson.getString("token");
+        LattePreference.setAppProfile(profile);
 
-        final UserProfile profile = new UserProfile(userId, name, email, token);
-        DatabaseManager.getInstance().getDao().insert(profile);
+//        final UserProfile profile = new UserProfile(userId, name, email, token);
+//        DatabaseManager.getInstance().getDao().insert(profile);
 
         //已经注册并登录成功了
         AccountManager.setSignState(true);

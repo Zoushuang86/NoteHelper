@@ -73,15 +73,7 @@ public class SignInDelegate extends LatteDelegate{
                                 String message = error.getString("message");
                                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                             } else {
-//                                Toast.makeText(getContext(), "登陆成功！", Toast.LENGTH_SHORT).show();
                                 SignHandler.onSignIn(response, mISignListener);
-//                                final Handler HANDLER = new Handler();
-//                                HANDLER.postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        //跳转主页面
-//                                    }
-//                                }, 2000);
                             }
                         }
                     })

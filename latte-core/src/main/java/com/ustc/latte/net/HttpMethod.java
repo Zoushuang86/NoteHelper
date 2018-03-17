@@ -6,8 +6,11 @@ package com.ustc.latte.net;
 
 public enum HttpMethod {
     GET,
-    POST,
-    POST_RAW,
+    POST_RAW,           //无Token
+    POST_TOKEN,         //有Token，无参数，无body
+    POST_TOKEN_PARAMS,  //有Token，有参数，无body
+    POST_TOKEN_RAW,     //有Token，无参数，有body
+    POST_TOKEN_PARAMS_RAW,     //有Token，有参数，有body
     PUT,
     PUT_RAW,
     DELETE,

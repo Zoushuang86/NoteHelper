@@ -13,4 +13,5 @@
     <string name="sign_up_hint">已经注册了？请登陆</string>
     <string name="sign_in">登陆</string>
     <string name="sign_in_hint">还没有账户？现在注册吧</string>
+    <string name="index_search_hint">请输入关键词</string>
 </resources>

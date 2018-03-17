@@ -24,16 +24,16 @@ public class ExampleApp extends Application {
                 .withInterceptor(new DebugInterceptor("index",R.raw.abc))
                 .configure();
 
-        initStetho();
-
-        DatabaseManager.getInstance().init(this);
+//        initStetho();
+//
+//        DatabaseManager.getInstance().init(this);
     }
 
-        private void initStetho() {
-            Stetho.initialize(
-                    Stetho.newInitializerBuilder(this)
-                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                            .build());
-        }
+//        private void initStetho() {
+//            Stetho.initialize(
+//                    Stetho.newInitializerBuilder(this)
+//                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+//                            .build());
+//        }
 }

@@ -11,6 +11,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -30,11 +31,22 @@ public interface RestService {
 
     @FormUrlEncoded
     @POST
-    Call<String> post(@Url String url, @FieldMap Map<String,Object> params);
-//    Call<String> post(@Url String url, @Body String params);
+    Call<String> postRaw(@Url String url, @Body RequestBody body);
 
     @POST
-    Call<String> postRaw(@Url String url, @Body RequestBody body);
+    Call<String> postToken(@Url String url,@HeaderMap Map<String,String> token);
+
+    @POST
+    Call<String> postTokenParams(@Url String url, @HeaderMap Map<String,String> token,
+                                 @QueryMap Map<String,Object> params);
+
+    @POST
+    Call<String> postTokenRaw(@Url String url, @HeaderMap Map<String,String> token,
+                              @Body RequestBody body);
+
+    @POST
+    Call<String> postTokenParamsRaw(@Url String url, @HeaderMap Map<String,String> token,
+                                    @QueryMap Map<String,Object> params, @Body RequestBody body);
 
     @FormUrlEncoded
     @PUT

@@ -48,17 +48,17 @@ public class ExampleActivity extends ProxyActivity implements
 
     @Override
     public void onLauncherFinish(OnLauncherFinishTag tag) {
-//        switch (tag){
-//            case SIGNED:
-//                Toast.makeText(this, "启动结束，用户已经登陆！", Toast.LENGTH_SHORT).show();
+        switch (tag){
+            case SIGNED:
+                Toast.makeText(this, "启动结束，用户已经登陆！", Toast.LENGTH_SHORT).show();
                 startWithPop(new EcBottomDelegate());
-//                break;
-//            case NOT_SIGNED:
-//                Toast.makeText(this, "启动结束，用户没有登陆！", Toast.LENGTH_SHORT).show();
-//                startWithPop(new SignInDelegate());
-//                break;
-//            default:
-//                break;
-//        }
+                break;
+            case NOT_SIGNED:
+                Toast.makeText(this, "启动结束，用户没有登陆！", Toast.LENGTH_SHORT).show();
+                startWithPop(new SignInDelegate());
+                break;
+            default:
+                break;
+        }
     }
 }
